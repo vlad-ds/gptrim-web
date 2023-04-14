@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>gptrim</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+</head>
+<body>
+    
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">gptrim</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse w-100" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="https://www.buymeacoffee.com/writevlad">buy me a coffee</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+
+    
+  <div class="container mt-5"> 
+    <div class="row">
+        <div class="container text-center">
+            <p>Hungry for tokens? Paste your text here and trim it before feeding it to your LLM. Happy hacking!
+            </p]>
+        </div>
+        <div class="col-md-6">
+            <form id="transform-form">
+                <div class="form-group">
+                    <label for="input-text" class="form-control-label">Input Text:</label>
+                    <textarea id="input-text" name="text" class="form-control" rows="20"></textarea>
+                </div>
+                <p id="char-count-input">Character Count: 0</p>
+                <button type="submit" class="btn btn-primary">Trim it!</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <label for="transformed-text">Trimmed Text:</label>
+            <div class="d-flex">
+              <textarea id="transformed-text" readonly class="form-control" rows="20"></textarea>
+              <button id="copy-button" class="btn btn-light" title="Copy to clipboard">
+                <i class="fas fa-copy"></i>
+              </button>
+            </div>
+            <p id="char-count-output">Character Count: 0</p>
+            <p id="char-count-difference"></p>
+          </div>
+    </div>
+</div>
+
+<footer class="footer bg-light mt-5">
+    <div class="container">
+      <div class="row">
+        <div class="col text-center py-3">
+          <a href="https://twitter.com/writevlad" class="mx-2 text-dark" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-twitter-square fa-2x"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/vlad-ds/" class="mx-2 text-dark" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-linkedin fa-2x"></i>
+          </a>
+          <a href="https://github.com/vlad-ds" class="mx-2 text-dark" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-github-square fa-2x"></i>
+          </a>  
+        </div>
+      </div>
+    </div>
+    <div class="container text-center">
+        <p>Privacy policy: this website has no cookies and does not collect any data.</p>
+    </div>
+  </footer>
+  
+  
+    <script src="/static/scripts.js"></script>
+</body>
+</html>
