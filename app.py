@@ -7,6 +7,7 @@ CORS(app)
 # TODO add origins
 CORS(app, origins=['https://your-domain.com', 'https://www.your-domain.com'])
 
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -18,6 +19,7 @@ def api_transform():
     text_trimmed = gptrim(input_text)
     result = {'text_trimmed': text_trimmed}
     return jsonify(result)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
