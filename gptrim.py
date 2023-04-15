@@ -3,6 +3,7 @@ from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
 
 nltk.download('punkt')
+nltk.download('stopwords')
 
 
 def remove_articles_prepositions(words):
