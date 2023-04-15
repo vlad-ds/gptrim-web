@@ -4,8 +4,8 @@ from gptrim import gptrim
 
 app = Flask(__name__)
 CORS(app)
-# TODO add origins
-# CORS(app, origins=['https://your-domain.com', 'https://www.your-domain.com'])
+CORS(app, origins=['https://gptrim.com',
+                   'https://gptrim.onrender.com'])
 
 
 @app.route('/')
