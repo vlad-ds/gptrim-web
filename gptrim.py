@@ -23,9 +23,9 @@ negation_words = ['no', 'nor', 'not', 'don', "don't", 'ain', 'aren',
                   'won', "won't", 'wouldn', "wouldn't"]
 
 
-def gptrim(text: str):
+def gptrim(text: str) -> str:
 
-    words = nltk.word_tokenize(text)
+    words = [word.lower() for word in nltk.word_tokenize(text)]
     stop_words = stopwords.words("english")
     stop_words_selected = [word for word in stop_words if word not in negation_words]
     words = [word for word in words if word not in stop_words_selected]
