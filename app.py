@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
-from gptrim import gptrim
+from gptrim import trim
 
 app = Flask(__name__)
 CORS(app)
@@ -16,7 +16,7 @@ def index():
 @app.route('/api/transform', methods=['POST'])
 def api_transform():
     input_text = request.form.get('text', '')
-    text_trimmed = gptrim(input_text)
+    text_trimmed = trim(input_text)
     result = {'text_trimmed': text_trimmed}
     return jsonify(result)
 
