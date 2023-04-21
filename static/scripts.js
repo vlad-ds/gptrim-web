@@ -24,22 +24,30 @@ function updateCharCountDifference(inputCharCount, outputCharCount) {
     event.preventDefault();
     const inputTextElement = document.getElementById("input-text");
     const inputText = inputTextElement.value;
-  
+
+    // Get the selected stemmer value
+    const stemmerSelectElement = document.getElementById("stemmer-select");
+    const selectedStemmer = stemmerSelectElement.value;
+
+    // Create a new FormData object and append the stemmer value
+    const formData = new FormData(event.target);
+    formData.append("stemmer", selectedStemmer);
+
     const response = await fetch("/api/transform", {
-      method: "POST",
-      body: new FormData(event.target),
+        method: "POST",
+        body: formData,
     });
-  
+
     const jsonResponse = await response.json();
     const transformedTextElement = document.getElementById("transformed-text");
     transformedTextElement.value = jsonResponse.text_trimmed;
-  
+
     // Update the character count for the output text
     updateCharCount(transformedTextElement.value, "char-count-output");
 
     // Update the percentage difference between input and output character counts
     updateCharCountDifference(inputText.length, transformedTextElement.value.length);
-  }
+}
   
   // Attach event listeners
   document.addEventListener("DOMContentLoaded", () => {
@@ -48,8 +56,6 @@ function updateCharCountDifference(inputCharCount, outputCharCount) {
   
     const transformForm = document.getElementById("transform-form");
     transformForm.addEventListener("submit", submitForm);
-
-
   });
 
   document.addEventListener("DOMContentLoaded", () => {
