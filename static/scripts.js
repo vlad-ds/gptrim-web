@@ -48,6 +48,24 @@ function updateCharCountDifference(inputCharCount, outputCharCount) {
     // Update the percentage difference between input and output character counts
     updateCharCountDifference(inputText.length, transformedTextElement.value.length);
 }
+
+  function updateStemmerDescription(selectedStemmer) {
+    const stemmerDescriptionElement = document.getElementById("stemmer-description");
+    let description = "";
+
+    switch (selectedStemmer) {
+        case "lancaster":
+            description = "Lancaster: A more aggressive stemmer.";
+            break;
+        case "snowball":
+            description = "Snowball: A general purpose stemmer.";
+            break;
+        default:
+            description = "Select a stemmer to further compress text (might lose more information)";
+    }
+
+    stemmerDescriptionElement.textContent = description;
+}
   
   // Attach event listeners
   document.addEventListener("DOMContentLoaded", () => {
@@ -56,12 +74,11 @@ function updateCharCountDifference(inputCharCount, outputCharCount) {
   
     const transformForm = document.getElementById("transform-form");
     transformForm.addEventListener("submit", submitForm);
-  });
 
-  document.addEventListener("DOMContentLoaded", () => {
-    // Existing event listeners here...
-  
+    const stemmerSelectElement = document.getElementById("stemmer-select");
+    stemmerSelectElement.addEventListener("change", (event) => updateStemmerDescription(event.target.value));
+
     const copyButton = document.getElementById("copy-button");
     copyButton.addEventListener("click", copyToClipboard);
-  })
-  
+
+  });

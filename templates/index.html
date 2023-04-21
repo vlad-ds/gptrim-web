@@ -56,14 +56,12 @@
                     <label for="stemmer-select">Stemmer:</label>
                     <select class="form-control" id="stemmer-select" name="stemmer">
                         <option value="">None</option>
-                        <option value="porter">Porter</option>
-                        <option value="lancaster">Lancaster</option>
-                        <option value="snowball">Snowball</option>
+                        <option value="snowball">Snowball (recommended)</option>
+                        <option value="lancaster">Lancaster (aggressive)</option>
                     </select>
-                    <small class="form-text text-muted">
-                        Porter: General-purpose stemmer | Lancaster: More aggressive stemmer | Snowball: Improved
-                        version of Porter
-                    </small>
+                    <p id="stemmer-description" class="form-text text-muted">
+                        Select a stemmer to further compress text (might lose more information)
+                    </p>
                 </div>
                 <button type="submit" class="btn btn-primary">Trim it!</button>
             </form>
