@@ -14,9 +14,9 @@ def index():
 
 
 @app.route('/api/transform', methods=['POST'])
-def api_transform():
+def api_transform(stemmer=None, language="english"):
     input_text = request.form.get('text', '')
-    text_trimmed = trim(input_text)
+    text_trimmed = trim(input_text, stemmer=stemmer, language=language)
     result = {'text_trimmed': text_trimmed}
     return jsonify(result)
 
