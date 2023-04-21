@@ -20,34 +20,40 @@ function updateCharCountDifference(inputCharCount, outputCharCount) {
   }
   
   // Get the input text and send it to the Flask API
-  async function submitForm(event) {
-    event.preventDefault();
-    const inputTextElement = document.getElementById("input-text");
-    const inputText = inputTextElement.value;
+async function submitForm(event) {
+  event.preventDefault();
+  const inputTextElement = document.getElementById("input-text");
+  const inputText = inputTextElement.value;
 
-    // Get the selected stemmer value
-    const stemmerSelectElement = document.getElementById("stemmer-select");
-    const selectedStemmer = stemmerSelectElement.value;
+  // Get the selected stemmer value
+  const stemmerSelectElement = document.getElementById("stemmer-select");
+  const selectedStemmer = stemmerSelectElement.value;
 
-    // Create a new FormData object and append the stemmer value
-    const formData = new FormData(event.target);
-    formData.append("stemmer", selectedStemmer);
+  // Get the selected model value
+  const modelSelectElement = document.getElementById("model"); // Add this line
+  const selectedModel = modelSelectElement.value; // Add this line
 
-    const response = await fetch("/api/transform", {
-        method: "POST",
-        body: formData,
-    });
+  // Create a new FormData object and append the stemmer and model values
+  const formData = new FormData(event.target);
+  formData.append("stemmer", selectedStemmer);
+  formData.append("model", selectedModel); // Add this line
 
-    const jsonResponse = await response.json();
-    const transformedTextElement = document.getElementById("transformed-text");
-    transformedTextElement.value = jsonResponse.text_trimmed;
+  const response = await fetch("/api/transform", {
+    method: "POST",
+    body: formData,
+  });
 
-    // Update the character count for the output text
-    updateCharCount(transformedTextElement.value, "char-count-output");
+  const jsonResponse = await response.json();
+  const transformedTextElement = document.getElementById("transformed-text");
+  transformedTextElement.value = jsonResponse.text_trimmed;
 
-    // Update the percentage difference between input and output character counts
-    updateCharCountDifference(inputText.length, transformedTextElement.value.length);
+  // Update the token count for the output text
+  updateTokenCount(jsonResponse.token_count, "token-count-output");
+
+  // Update the percentage difference between input and output token counts
+  updateTokenCountDifference(inputTokenCount, jsonResponse.token_count);
 }
+
 
   function updateStemmerDescription(selectedStemmer) {
     const stemmerDescriptionElement = document.getElementById("stemmer-description");
@@ -66,6 +72,18 @@ function updateCharCountDifference(inputCharCount, outputCharCount) {
 
     stemmerDescriptionElement.textContent = description;
 }
+
+function updateTokenCount(tokenCount, tokenCountElementId) {
+    const tokenCountElement = document.getElementById(tokenCountElementId);
+    tokenCountElement.textContent = `Token Count: ${tokenCount}`;
+}
+
+function updateTokenCountDifference(inputTokenCount, outputTokenCount) {
+    const percentage = inputTokenCount > 0 ? ((inputTokenCount - outputTokenCount) / inputTokenCount) * 100 : 0;
+    const percentageElement = document.getElementById("token-count-difference");
+    percentageElement.textContent = `Text was reduced by ${percentage.toFixed(2)}%!`;
+}
+
   
   // Attach event listeners
   document.addEventListener("DOMContentLoaded", () => {

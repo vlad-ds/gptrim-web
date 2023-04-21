@@ -48,6 +48,17 @@
         <div class="col-md-6">
             <form id="transform-form">
                 <div class="form-group">
+                    <label for="model">Choose a model:</label>
+                    <select name="model" id="model">
+                        <option value="gpt-4">GPT-4</option>
+                        <option value="gpt-3.5-turbo">GPT-3.5-Turbo</option>
+                        <option value="text-embedding-ada-002">Text-Embedding-Ada-002</option>
+                        <option value="text-davinci-002">Text-Davinci-002</option>
+                        <option value="text-davinci-003">Text-Davinci-003</option>
+                        <option value="davinci">Davinci</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="input-text" class="form-control-label">Input Text:</label>
                     <textarea id="input-text" name="text" class="form-control" rows="20"></textarea>
                 </div>
