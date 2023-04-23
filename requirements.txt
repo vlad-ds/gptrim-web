@@ -3,3 +3,4 @@ gunicorn==20.1.0
 Flask==2.2.3
 Flask-Cors==3.0.10
 nltk==3.8.1
+tiktoken===0.3.3

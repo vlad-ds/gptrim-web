@@ -1,11 +1,18 @@
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 from gptrim import trim
+import tiktoken
 
 app = Flask(__name__)
 CORS(app)
 CORS(app, origins=['https://gptrim.com',
                    'https://gptrim.onrender.com'])
+
+
+def count_tokens(text: str,) -> int:
+    encoding = tiktoken.encoding_for_model("cl100k_base")
+    tokens = encoding.encode(text)
+    return len(tokens)
 
 
 @app.route('/')
