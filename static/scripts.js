@@ -2,15 +2,14 @@
 function updateCharCount(text, charCountElementId) {
     const charCount = text.length;
     const charCountElement = document.getElementById(charCountElementId);
-    charCountElement.textContent = `Character Count: ${charCount}`;
+    charCountElement.textContent = `${charCount}`;
   }
 
 // Calculate and update the percentage difference between input and output character counts
-function updateCharCountDifference(inputCharCount, outputCharCount) {
-    const percentage = inputCharCount > 0 ? ((inputCharCount - outputCharCount) / inputCharCount) * 100 : 0;
-    const percentageElement = document.getElementById("char-count-difference");
-    percentageElement.textContent = `Text was reduced by ${percentage.toFixed(2)}%!`;
-  }
+  function updateTokenCount(tokens, tokenCountElementId) {
+    const tokenCountElement = document.getElementById(tokenCountElementId);
+    tokenCountElement.textContent = `${tokens}`;
+}
 
   function copyToClipboard() {
     const transformedTextElement = document.getElementById("transformed-text");
@@ -19,7 +18,6 @@ function updateCharCountDifference(inputCharCount, outputCharCount) {
     document.execCommand("copy");
   }
   
-  // Get the input text and send it to the Flask API
   async function submitForm(event) {
     event.preventDefault();
     const inputTextElement = document.getElementById("input-text");
@@ -29,9 +27,17 @@ function updateCharCountDifference(inputCharCount, outputCharCount) {
     const stemmerSelectElement = document.getElementById("stemmer-select");
     const selectedStemmer = stemmerSelectElement.value;
 
+    // Get the values of the remove_spaces and remove_stopwords checkboxes
+    const removeSpacesCheckbox = document.getElementById("remove-spaces");
+    const removeSpaces = removeSpacesCheckbox.checked;
+    const removeStopwordsCheckbox = document.getElementById("remove-stopwords");
+    const removeStopwords = removeStopwordsCheckbox.checked;
+
     // Create a new FormData object and append the stemmer value
     const formData = new FormData(event.target);
     formData.append("stemmer", selectedStemmer);
+    formData.append("remove_spaces", removeSpaces);
+    formData.append("remove_stopwords", removeStopwords);
 
     const response = await fetch("/api/transform", {
         method: "POST",
@@ -42,11 +48,15 @@ function updateCharCountDifference(inputCharCount, outputCharCount) {
     const transformedTextElement = document.getElementById("transformed-text");
     transformedTextElement.value = jsonResponse.text_trimmed;
 
+    // Update the token count for the input and output text
+    updateTokenCount(jsonResponse.input_token_count, "token-count-input");
+    updateTokenCount(jsonResponse.output_token_count, "token-count-output");
+
     // Update the character count for the output text
     updateCharCount(transformedTextElement.value, "char-count-output");
 
-    // Update the percentage difference between input and output character counts
-    updateCharCountDifference(inputText.length, transformedTextElement.value.length);
+    updateSavedPercentage(jsonResponse.input_token_count, jsonResponse.output_token_count, "token-saved-percentage");
+    updateSavedPercentage(inputText.length, transformedTextElement.value.length, "char-saved-percentage");
 }
 
   function updateStemmerDescription(selectedStemmer) {
@@ -66,11 +76,28 @@ function updateCharCountDifference(inputCharCount, outputCharCount) {
 
     stemmerDescriptionElement.textContent = description;
 }
+
+function updateSavedPercentage(beforeCount, afterCount, savedPercentageElementId) {
+    const percentage = beforeCount > 0 ? ((beforeCount - afterCount) / beforeCount) * 100 : 0;
+    const savedPercentageElement = document.getElementById(savedPercentageElementId);
+    savedPercentageElement.textContent = `${percentage.toFixed(2)}%`;
+}
   
   // Attach event listeners
   document.addEventListener("DOMContentLoaded", () => {
     const inputTextElement = document.getElementById("input-text");
     inputTextElement.addEventListener("input", (event) => updateCharCount(event.target.value, "char-count-input"));
+    inputTextElement.addEventListener("input", async (event) => {updateCharCount(event.target.value, "char-count-input");
+
+    const response = await fetch('/api/transform', {
+        method: 'POST',
+        body: JSON.stringify({ text: event.target.value }),
+        headers: { 'Content-Type': 'application/json' },
+    });
+
+    const jsonResponse = await response.json();
+    updateTokenCount(jsonResponse.input_token_count, "token-count-input");
+});
   
     const transformForm = document.getElementById("transform-form");
     transformForm.addEventListener("submit", submitForm);
