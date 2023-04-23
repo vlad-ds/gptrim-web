@@ -13,12 +13,14 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/static/assets/favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/static/assets/favicon_io/favicon-16x16.png">
     <link rel="manifest" href="/static/assets/favicon_io/site.webmanifest">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-toggle@2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-toggle@2.2.2/js/bootstrap-toggle.min.js"></script>
 
 </head>
 <body>
@@ -41,27 +43,35 @@
 
 <div class="container mt-5">
     <div class="row">
-    <div class="col-md-12">
-        <div class="toolbar">
-            <div class="form-group">
-                <label for="stemmer-select">Stemmer:</label>
-                <select class="form-control" id="stemmer-select" name="stemmer">
-                    <option value="">None</option>
-                    <option value="snowball">Snowball (recommended)</option>
-                    <option value="lancaster">Lancaster (aggressive)</option>
-                </select>
-                <p id="stemmer-description" class="form-text text-muted">
-                    Select a stemmer to further compress text (might lose more information)
-                </p>
+        <div class="col-md-12">
+            <div class="toolbar">
+                <div class="form-group">
+                    <label for="stemmer-select">Stemmer:</label>
+                    <select class="form-control" id="stemmer-select" name="stemmer">
+                        <option value="">None</option>
+                        <option value="snowball">Snowball (recommended)</option>
+                        <option value="lancaster">Lancaster (aggressive)</option>
+                    </select>
+                    <p id="stemmer-description" class="form-text text-muted">
+                        Select a stemmer to increase compression (might lose more information)
+                    </p>
+                    <!-- Replace the existing checkboxes with the following code -->
+                    <div class="form-group toggle-with-label">
+
+                        <input type="checkbox" id="remove-spaces" name="remove_spaces" data-toggle="toggle"
+                               data-size="small">
+                        <label for="remove-spaces">Remove spaces (saves characters, might increase tokens)</label>
+                    </div>
+                    <div class="form-group toggle-with-label">
+                        <input type="checkbox" id="remove-stopwords" name="remove_stopwords" data-toggle="toggle"
+                               data-size="small">
+                        <label for="remove-stopwords">Remove stopwords</label>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
     <div class="row">
-        <div class="container text-center">
-            <p>Hungry for tokens? Paste your text here and trim it before feeding it to your LLM!
-            </p>
-        </div>
         <div class="col-md-6">
             <form id="transform-form">
                 <div class="form-group">
@@ -83,15 +93,15 @@
         </div>
     </div>
     <table class="table table-bordered mt-3">
-    <thead>
+        <thead>
         <tr>
             <th scope="col"></th>
             <th scope="col">Before</th>
             <th scope="col">After</th>
             <th scope="col">Saved %</th>
         </tr>
-    </thead>
-    <tbody>
+        </thead>
+        <tbody>
         <tr>
             <th scope="row">Tokens</th>
             <td id="token-count-input">0</td>
@@ -104,44 +114,56 @@
             <td id="char-count-output">0</td>
             <td id="char-saved-percentage">0%</td>
         </tr>
-    </tbody>
-</table>
-    <div class="container" style="margin-top: 20px">
-        <p style="font-size:14px;">Disclaimer: The compression is not perfect. The original meaning can get lost or
+        </tbody>
+    </table>
+    <div class="container text-left">
+        <h2>Guide</h2>
+        <p>There are two ways to reduce your GPT prompt size. By reducing characters, you can fit ore text into a
+            single chat message. By reducing tokens, you can save money on API calls and increase the context window
+            size.
+        </p>
+        <p>Stopwords removal reduces both characters and tokens.</p>
+        <p>Stemming and space removal reduce characters, but increase token usage.</p>
+        <p>You should experiment until you find the right solution!</p>
+    </div>
+    <div class="container text-left">
+        <h2>Disclaimer</h2>
+        <p>The compression is not perfect. The original meaning can get lost or
             misinterpreted. Don't use this for applications where nuance is crucial (e.g. medical diagnosis, law). The
             tool is provided as is without any guarantees. I am not liable for any misinterpretations or mistakes that
             arise from using it.
-        </p]>
-    </div>
-</div>
+        </p>
 
-<footer class="footer bg-light mt-5">
-    <div class="container">
-        <div class="row">
-            <div class="col text-center py-3">
-                <a href="https://twitter.com/writevlad" class="mx-2 text-dark" target="_blank"
-                   rel="noopener noreferrer">
-                    <i class="fab fa-twitter-square fa-2x"></i>
-                </a>
-                <a href="https://www.linkedin.com/in/vlad-ds/" class="mx-2 text-dark" target="_blank"
-                   rel="noopener noreferrer">
-                    <i class="fab fa-linkedin fa-2x"></i>
-                </a>
-                <a href="https://github.com/vlad-ds" class="mx-2 text-dark" target="_blank" rel="noopener noreferrer">
-                    <i class="fab fa-github-square fa-2x"></i>
-                </a>
+    </div>
+
+    <footer class="footer bg-light mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col text-center py-3">
+                    <a href="https://twitter.com/writevlad" class="mx-2 text-dark" target="_blank"
+                       rel="noopener noreferrer">
+                        <i class="fab fa-twitter-square fa-2x"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/vlad-ds/" class="mx-2 text-dark" target="_blank"
+                       rel="noopener noreferrer">
+                        <i class="fab fa-linkedin fa-2x"></i>
+                    </a>
+                    <a href="https://github.com/vlad-ds" class="mx-2 text-dark" target="_blank"
+                       rel="noopener noreferrer">
+                        <i class="fab fa-github-square fa-2x"></i>
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="container text-center">
-        <p>Made with ❤️ by Vlad</p>
-    </div>
-    <div class="container text-center">
-        <p style="font-size:12px;">Privacy policy. This website has no cookies and does not collect any data.</p>
-    </div>
-</footer>
+        <div class="container text-center">
+            <p>Made with ❤️ by Vlad</p>
+        </div>
+        <div class="container text-center">
+            <p style="font-size:12px;">Privacy policy. This website has no cookies and does not collect any data.</p>
+        </div>
+    </footer>
 
 
-<script src="/static/scripts.js"></script>
+    <script src="/static/scripts.js"></script>
 </body>
 </html>

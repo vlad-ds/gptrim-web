@@ -1,0 +1,18 @@
+/* Add this custom CSS */
+  .toggle.btn {
+    border: 1px solid #ccc;
+    margin-right: 10px;
+  }
+
+  .toggle-group {
+    margin-right: 5px;
+  }
+
+  .form-group.toggle-with-label {
+    display: flex;
+    align-items: center;
+  }
+
+  .form-group.toggle-with-label label {
+    margin-right: 10px;
+  }

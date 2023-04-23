@@ -24,7 +24,15 @@ def index():
 def api_transform():
     input_text = request.form.get('text', '')
     stemmer = request.form.get("stemmer")
-    text_trimmed = trim(input_text, stemmer=stemmer, language="english")
+    remove_spaces = request.form.get("remove_spaces") == "true"
+    remove_stopwords = request.form.get("remove_stopwords") == "true"
+
+    text_trimmed = trim(input_text,
+                        stemmer=stemmer,
+                        language="english",
+                        remove_stopwords=remove_stopwords,
+                        remove_spaces=remove_spaces
+                        )
 
     input_token_count = count_tokens(input_text)
     output_token_count = count_tokens(text_trimmed)
