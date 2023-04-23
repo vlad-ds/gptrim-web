@@ -41,6 +41,23 @@
 
 <div class="container mt-5">
     <div class="row">
+    <div class="col-md-12">
+        <div class="toolbar">
+            <div class="form-group">
+                <label for="stemmer-select">Stemmer:</label>
+                <select class="form-control" id="stemmer-select" name="stemmer">
+                    <option value="">None</option>
+                    <option value="snowball">Snowball (recommended)</option>
+                    <option value="lancaster">Lancaster (aggressive)</option>
+                </select>
+                <p id="stemmer-description" class="form-text text-muted">
+                    Select a stemmer to further compress text (might lose more information)
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="row">
         <div class="container text-center">
             <p>Hungry for tokens? Paste your text here and trim it before feeding it to your LLM!
             </p>
@@ -53,17 +70,6 @@
                 </div>
                 <p id="char-count-input">Character Count: 0</p>
                 <p id="token-count-input">Token Count: 0</p>
-                <div class="form-group">
-                    <label for="stemmer-select">Stemmer:</label>
-                    <select class="form-control" id="stemmer-select" name="stemmer">
-                        <option value="">None</option>
-                        <option value="snowball">Snowball (recommended)</option>
-                        <option value="lancaster">Lancaster (aggressive)</option>
-                    </select>
-                    <p id="stemmer-description" class="form-text text-muted">
-                        Select a stemmer to further compress text (might lose more information)
-                    </p>
-                </div>
                 <button type="submit" class="btn btn-primary">Trim it!</button>
             </form>
         </div>
