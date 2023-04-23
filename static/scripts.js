@@ -9,8 +9,13 @@ function updateCharCount(text, charCountElementId) {
 function updateCharCountDifference(inputCharCount, outputCharCount) {
     const percentage = inputCharCount > 0 ? ((inputCharCount - outputCharCount) / inputCharCount) * 100 : 0;
     const percentageElement = document.getElementById("char-count-difference");
-    percentageElement.textContent = `Text was reduced by ${percentage.toFixed(2)}%!`;
+    percentageElement.textContent = `Characters were reduced by ${percentage.toFixed(2)}%`;
   }
+
+  function updateTokenCount(tokens, tokenCountElementId) {
+    const tokenCountElement = document.getElementById(tokenCountElementId);
+    tokenCountElement.textContent = `Token Count: ${tokens}`;
+}
 
   function copyToClipboard() {
     const transformedTextElement = document.getElementById("transformed-text");
@@ -41,6 +46,10 @@ function updateCharCountDifference(inputCharCount, outputCharCount) {
     const jsonResponse = await response.json();
     const transformedTextElement = document.getElementById("transformed-text");
     transformedTextElement.value = jsonResponse.text_trimmed;
+
+    // Update the token count for the input and output text
+    updateTokenCount(jsonResponse.input_token_count, "token-count-input");
+    updateTokenCount(jsonResponse.output_token_count, "token-count-output");
 
     // Update the character count for the output text
     updateCharCount(transformedTextElement.value, "char-count-output");

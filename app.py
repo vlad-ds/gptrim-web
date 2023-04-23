@@ -10,7 +10,7 @@ CORS(app, origins=['https://gptrim.com',
 
 
 def count_tokens(text: str,) -> int:
-    encoding = tiktoken.encoding_for_model("cl100k_base")
+    encoding = tiktoken.get_encoding("cl100k_base")
     tokens = encoding.encode(text)
     return len(tokens)
 
@@ -25,7 +25,16 @@ def api_transform():
     input_text = request.form.get('text', '')
     stemmer = request.form.get("stemmer")
     text_trimmed = trim(input_text, stemmer=stemmer, language="english")
-    result = {'text_trimmed': text_trimmed}
+
+    input_token_count = count_tokens(input_text)
+    output_token_count = count_tokens(text_trimmed)
+
+    result = {
+        'text_trimmed': text_trimmed,
+        'input_token_count': input_token_count,
+        'output_token_count': output_token_count
+    }
+
     return jsonify(result)
 
 
