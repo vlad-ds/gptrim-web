@@ -32,12 +32,15 @@ function updateCharCount(text, charCountElementId) {
     const removeSpaces = removeSpacesCheckbox.checked;
     const removeStopwordsCheckbox = document.getElementById("remove-stopwords");
     const removeStopwords = removeStopwordsCheckbox.checked;
+    const removePunctuationCheckbox = document.getElementById("remove-punctuation");
+    const removePunctuation = removePunctuationCheckbox.checked;
 
     // Create a new FormData object and append the stemmer value
     const formData = new FormData(event.target);
     formData.append("stemmer", selectedStemmer);
     formData.append("remove_spaces", removeSpaces);
     formData.append("remove_stopwords", removeStopwords);
+    formData.append("remove_punctuation", removePunctuation);
 
     const response = await fetch("/api/transform", {
         method: "POST",

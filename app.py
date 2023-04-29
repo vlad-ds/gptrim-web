@@ -26,12 +26,14 @@ def api_transform():
     stemmer = request.form.get("stemmer")
     remove_spaces = request.form.get("remove_spaces") == "true"
     remove_stopwords = request.form.get("remove_stopwords") == "true"
+    remove_punctuation = request.form.get("remove_punctuation") == "true"
 
     text_trimmed = trim(input_text,
                         stemmer=stemmer,
                         language="english",
                         remove_stopwords=remove_stopwords,
-                        remove_spaces=remove_spaces
+                        remove_spaces=remove_spaces,
+                        remove_punctuation=remove_punctuation
                         )
 
     input_token_count = count_tokens(input_text)
