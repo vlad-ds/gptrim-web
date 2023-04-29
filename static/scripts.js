@@ -7,7 +7,6 @@ function applySaveTokensRecipe() {
 
 function applySaveCharactersRecipe() {
   $("#remove-stopwords").prop("checked", true).change();
-  $("#remove-punctuation").prop("checked", true).change();
   $("#remove-spaces").prop("checked", true).change();
   $("#stemmer-select").val("snowball");
 }
