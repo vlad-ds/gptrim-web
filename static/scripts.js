@@ -1,3 +1,17 @@
+function applySaveTokensRecipe() {
+  $("#remove-stopwords").prop("checked", true).change();
+  $("#remove-punctuation").prop("checked", true).change();
+  $("#remove-spaces").prop("checked", false).change();
+  $("#stemmer-select").val("");
+}
+
+function applySaveCharactersRecipe() {
+  $("#remove-stopwords").prop("checked", true).change();
+  $("#remove-punctuation").prop("checked", true).change();
+  $("#remove-spaces").prop("checked", true).change();
+  $("#stemmer-select").val("snowball");
+}
+
 // Update the character count of the input text
 function updateCharCount(text, charCountElementId) {
     const charCount = text.length;
@@ -17,7 +31,7 @@ function updateCharCount(text, charCountElementId) {
     transformedTextElement.setSelectionRange(0, 99999); // For mobile devices
     document.execCommand("copy");
   }
-  
+
   async function submitForm(event) {
     event.preventDefault();
     const inputTextElement = document.getElementById("input-text");
@@ -85,7 +99,7 @@ function updateSavedPercentage(beforeCount, afterCount, savedPercentageElementId
     const savedPercentageElement = document.getElementById(savedPercentageElementId);
     savedPercentageElement.textContent = `${percentage.toFixed(2)}%`;
 }
-  
+
   // Attach event listeners
   document.addEventListener("DOMContentLoaded", () => {
     const inputTextElement = document.getElementById("input-text");
@@ -101,7 +115,7 @@ function updateSavedPercentage(beforeCount, afterCount, savedPercentageElementId
     const jsonResponse = await response.json();
     updateTokenCount(jsonResponse.input_token_count, "token-count-input");
 });
-  
+
     const transformForm = document.getElementById("transform-form");
     transformForm.addEventListener("submit", submitForm);
 
@@ -110,5 +124,13 @@ function updateSavedPercentage(beforeCount, afterCount, savedPercentageElementId
 
     const copyButton = document.getElementById("copy-button");
     copyButton.addEventListener("click", copyToClipboard);
+
+     // Add event listeners for "save-tokens-recipe" and "save-characters-recipe" buttons
+    const saveTokensRecipeButton = document.getElementById("save-tokens-recipe");
+    saveTokensRecipeButton.addEventListener("click", applySaveTokensRecipe);
+
+    const saveCharactersRecipeButton = document.getElementById("save-characters-recipe");
+    saveCharactersRecipeButton.addEventListener("click", applySaveCharactersRecipe);
+
 
   });
